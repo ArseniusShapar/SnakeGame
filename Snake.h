@@ -11,8 +11,6 @@ typedef struct {
 } Snake;
 
 Snake CreateSnake(Segment head, direction direct) {
-	// Создание змеи в начале игры
-
 	Segment* arr = (Segment*)malloc(game_width * game_height * sizeof(Segment));
 	if (arr) arr[0] = head;
 	Snake snake = { arr, 1 , direct };
@@ -34,18 +32,13 @@ void AddTail(Snake* snake) {
 	int len = snake->len;
 	Segment old_tail = snake->arr[len - 1];
 
-	// При инициализации имеет координаты текущего хвоста змеи
 	Segment new_tail = CreateSegment(CreatePair(old_tail.pos.x, old_tail.pos.y), len);
 
-	// Если змея состоит только из головы
 	if (snake->len == 1) {
 		MoveSegment(&new_tail, reverse(snake->direct));
 	}
 
-	// Если длина змеи больше 1
 	else {
-
-		// Определяем текущее направление движения старого хвоста
 		direction old_tail_direct;
 		Segment old_pretail = snake->arr[len - 2];
 		int dx = old_pretail.pos.x - old_tail.pos.x;
@@ -56,21 +49,17 @@ void AddTail(Snake* snake) {
 		else if (dy == 1) old_tail_direct = up;
 		else if (dy == -1) old_tail_direct = down;
 
-		// Распологаем новый хвост с противоположной движению старого хвоста стороне
 		MoveSegment(&new_tail, reverse(old_tail_direct));
 	}
 
-	// Добавляем новый хвост
 	AddSegment(snake, new_tail);
 }
 
 void Move(Snake* snake) {
-	// Двигаем все тело змеи кроме головы
 	for (int i = snake->len - 1; i > 0; i--) {
 		(snake->arr)[i].pos = (snake->arr)[i - 1].pos;
 	}
 
-	// Двигаем голову змеи
 	MoveSegment(&snake->arr[0], snake->direct);
 }
 
@@ -96,5 +85,3 @@ bool isAppleEaten(Snake* snake, Apple apple) {
 	Segment head = snake->arr[0];
 	return isEqual(head.pos, apple.pos);
 }
-
-
