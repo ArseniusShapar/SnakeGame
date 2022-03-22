@@ -20,6 +20,3 @@ direction reverse(direction direct) {
 	else if (direct == up) return down;
 	else if (direct == down) return up;
 }
-
-
-
