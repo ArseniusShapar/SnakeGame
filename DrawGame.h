@@ -49,5 +49,3 @@ void DrawGame(char screen[window_height][window_width], char game[game_height][g
 	CopyGameToScreen(screen, game);
 	printf(screen);
 }
-
-
